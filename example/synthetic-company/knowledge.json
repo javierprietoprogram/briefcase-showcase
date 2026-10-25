@@ -1,0 +1,106 @@
+{
+  "synthetic": true,
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "draft",
+      "path": "example/synthetic-company/sources/project-draft.md",
+      "sha256": "f1f0f298929b1ba4357c4abd06a18ba04fd945492c522bb4b3654e720ccfa0e5",
+      "lines": [
+        1,
+        10
+      ]
+    },
+    {
+      "id": "meeting",
+      "path": "example/synthetic-company/sources/meeting.md",
+      "sha256": "0719435c84d95911fc596aa04a43a8618d662911c3cde7317adc2b19bd2ba5c3",
+      "lines": [
+        1,
+        10
+      ]
+    },
+    {
+      "id": "decision",
+      "path": "example/synthetic-company/sources/decision.md",
+      "sha256": "82c8d922a8ce771cbed509442022cd8a35ad24160f82a9d7833125d29db01115",
+      "lines": [
+        1,
+        12
+      ]
+    },
+    {
+      "id": "previous",
+      "path": "example/synthetic-company/sources/previous-decision.md",
+      "sha256": "48ad4384a4adc019ddc66d58a3921ca7f9713fedc741b6bde181c195f6a27ee5",
+      "lines": [
+        1,
+        9
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "id": "NS-Q4",
+      "domain": "marketing",
+      "audiences": [
+        "general",
+        "marketing"
+      ],
+      "query_terms": [
+        [
+          "q4",
+          "fourth quarter"
+        ],
+        [
+          "marketing",
+          "campaign"
+        ]
+      ]
+    }
+  ],
+  "records": [
+    {
+      "id": "NS-PROP-01",
+      "topic_id": "NS-Q4",
+      "kind": "proposal",
+      "status": "pending",
+      "source_ids": [
+        "draft"
+      ],
+      "summary": "Launch discount advertising."
+    },
+    {
+      "id": "NS-DEC-01",
+      "topic_id": "NS-Q4",
+      "kind": "decision",
+      "status": "superseded",
+      "source_ids": [
+        "previous"
+      ],
+      "summary": "Explore discount advertising.",
+      "superseded_by": "NS-DEC-02"
+    },
+    {
+      "id": "NS-DEC-02",
+      "topic_id": "NS-Q4",
+      "kind": "decision",
+      "status": "approved",
+      "source_ids": [
+        "draft",
+        "meeting",
+        "decision"
+      ],
+      "approval": {
+        "reviewer": "Casey Linden (fictional)",
+        "source_id": "decision"
+      },
+      "valid_from": "2026-10-15",
+      "valid_until": "2026-12-31",
+      "supersedes": "NS-DEC-01",
+      "summary": "Prioritize direct-booking content for the Q4 hotel campaign; do not launch the proposed discount ads.",
+      "owner": "Morgan Vale (fictional)",
+      "scope": "Northstar Hotels / Q4 marketing"
+    }
+  ]
+}
