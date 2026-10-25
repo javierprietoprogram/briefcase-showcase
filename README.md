@@ -1,8 +1,10 @@
 # Briefcase
 
+[![Tests](https://github.com/javierprietoprogram/briefcase-showcase/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/javierprietoprogram/briefcase-showcase/actions/workflows/tests.yml)
+
 Briefcase explores company knowledge infrastructure: turning fragmented information into structured, traceable context that AI assistants and agents can use.
 
-This is a public technical showcase with an original, credential-free demonstration. It explains the Enterprise Brain concept; it is not a release of the production platform. [Briefcase website](https://www.briefcasegroup.com/).
+This public technical showcase demonstrates the Enterprise Brain concept with a credential-free Python CLI over synthetic records. It is not a release of the production platform. [Briefcase website](https://www.briefcasegroup.com/).
 
 ## The problem
 
@@ -13,6 +15,23 @@ Putting those documents into an LLM does not tell it which statement is authorit
 ## The idea
 
 An Enterprise Brain preserves source evidence, organizes knowledge by responsibility and domain, and separates facts, proposals, decisions and open questions. Reviewed knowledge becomes reusable context. Assistants retrieve bounded evidence; tools can expose permitted operations when appropriate.
+
+## My role
+
+I am a Briefcase co-founder and builder working on product architecture, knowledge-system design and AI/agent workflows. My hands-on work includes local ingestion tooling, structured knowledge experiments, deterministic indexing and review flows. I use prototypes to test how source evidence becomes useful company context, while keeping proposals distinct from accepted decisions.
+
+## What this repository implements
+
+| Area | Here |
+| --- | --- |
+| Knowledge model | Synthetic JSON records, evidence links, approval and validity fields |
+| Retrieval | Small deterministic topic matcher with domain and audience filters |
+| Answer construction | Template from the eligible approved decision, with evidence integrity checks |
+| Governance | Refusal on conflicting decisions, stale evidence or missing review |
+| Connectors, semantic retrieval, MCP | Discussed as interface design; no live integrations or MCP server |
+| External actions | None; the demonstration only reads bundled files |
+
+## Architecture
 
 ```mermaid
 flowchart TD
@@ -34,6 +53,15 @@ This is a conceptual architecture, not a deployment diagram. [Architecture and b
 ## Try the synthetic example
 
 Northstar Hotels is an invented company. Its draft proposes discount advertising; a meeting chooses direct-booking content instead; an approved decision records that choice. Every person, document, date and business detail in the fixture is fictional.
+
+```mermaid
+flowchart TD
+    Q["Question: What was decided about Q4 marketing?"] --> K["Match topic and select eligible approved decision NS-DEC-02"]
+    K --> V["Verify approval, validity and evidence fingerprints"]
+    E["Synthetic evidence: project draft, meeting, decision note"] --> V
+    V -->|checks pass| A["Answer: prioritize direct-booking content, with three source references"]
+    V -->|checks fail| R["Abstain or request review"]
+```
 
 Python 3.10+; standard library only. From this repository:
 
@@ -59,17 +87,6 @@ The CLI returns structured JSON containing:
 
 The full response includes three source paths, line ranges and SHA-256 fingerprints, plus a warning that the draft is not an approved decision. Change a cited source without updating its reviewed fingerprint and the demo refuses to answer. Ask about an unrelated subject and it abstains. [Fixture walkthrough](example/README.md).
 
-## What this repository implements
-
-| Area | Here |
-| --- | --- |
-| Knowledge model | Synthetic JSON records, evidence links, approval and validity fields |
-| Retrieval | Small deterministic topic matcher with domain and audience filters |
-| Answer construction | Template from the eligible approved decision, with evidence integrity checks |
-| Governance | Refusal on conflicting decisions, stale evidence or missing review |
-| Connectors, semantic retrieval, MCP | Discussed as interface design; no live integrations or MCP server |
-| External actions | None; the demonstration only reads bundled files |
-
 ## Technical challenges
 
 - **Freshness and provenance:** source detection, content extraction and reviewed knowledge need distinct checkpoints. A successful scan does not establish a current answer.
@@ -82,12 +99,8 @@ The full response includes three source paths, line ranges and SHA-256 fingerpri
 
 [Knowledge model](docs/knowledge-model.md) · [Ingestion](docs/ingestion-pipeline.md) · [Agent access](docs/agent-access.md)
 
-## My role
-
-I am a Briefcase co-founder and builder working on product architecture, knowledge-system design and AI/agent workflows. My hands-on work includes local ingestion tooling, structured knowledge experiments, deterministic indexing and review flows. I use prototypes to test how source evidence becomes useful company context, while keeping proposals distinct from accepted decisions.
-
-This showcase is a deliberately small implementation of those ideas. It does not establish production scale, retrieval quality across real companies, or autonomous operation. See [Briefcase](https://www.briefcasegroup.com/) for the public company introduction.
-
 ## Scope and reuse
 
-All examples are synthetic. No company knowledge base, connector output, credentials or private code is distributed. The code and documentation in this repository are available under the [MIT license](LICENSE); the license does not grant rights to Briefcase branding or unrelated materials on its website.
+This demo does not establish production scale, retrieval quality across real companies, or autonomous operation.
+
+No company knowledge base, connector output, credentials or private code is distributed. The code and documentation in this repository are available under the [MIT license](LICENSE); the license does not grant rights to Briefcase branding or unrelated materials on its website.
